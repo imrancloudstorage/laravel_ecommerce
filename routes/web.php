@@ -1,6 +1,9 @@
 <?php
 
+use App\Http\Controllers\CategoryController;
+use App\Models\User;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\DB;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,6 +20,14 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/category/all', [CategoryController::class,'Allcat'])->name('all.category');
+
+Route::post('/category/add', [CategoryController::class,'Addcat'])->name('store.category');
+
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
-    return view('dashboard');
+   // $users = User::all();
+
+   $users = DB::table('users')->get();
+
+    return view('dashboard',compact('users'));
 })->name('dashboard');
